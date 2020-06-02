@@ -55,9 +55,10 @@ class NewsInfo extends Component {
                 </span>
                 {this.state.showComments && this.state.comments.length>0 &&
                 <div style={{marginTop:'10px'}}>
-                    {this.state.comments.map((comment,idx) => <div key={"comment"+idx} style={{display:'inline-block',width:'100%'}}><div style={{width:'80%',float:'right',marginBottom:'14px',padding:'10px',border:'1px solid black'}} dangerouslySetInnerHTML={{ __html: comment.comment_text }} />
-                    <div style={{width:'18%',textAlign:'right',marginBottom:'10px',fontWeight:'bold',marginRight:'10px'}}>
+                    {this.state.comments.map((comment,idx) => <div><span style={{marginLeft:'200px',marginBottom:'10px',fontWeight:'bold'}}>
                     Author: {comment.author}
+                    </span><div key={"comment"+idx} style={{display:'inline-block',width:'100%',marginTop:'6px'}}><div style={{width:'80%',float:'right',marginRight:'10px',marginBottom:'14px',padding:'20px',border:'2px solid #cadbce',borderRadius:'10px'}} dangerouslySetInnerHTML={{ __html: comment.comment_text }} />
+                    
                     </div>
                     </div>
                     )
