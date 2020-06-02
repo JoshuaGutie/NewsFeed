@@ -49,10 +49,10 @@ class App extends Component {
   fetchData = (query, pageNumber) => {
     let articles = `http://hn.algolia.com/api/v1/search?query=${query}&page=${pageNumber}`;
     axios.get(articles)
-      .then(res => res.json())
       .then(data => {
+        console.log(data);
         this.setState({
-          articles: [...this.state.articles, ...data.hits]
+          articles: [...this.state.articles, ...data.data.hits]
         })
         console.log("data", data)
       })
