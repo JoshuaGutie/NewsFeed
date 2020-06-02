@@ -17,7 +17,7 @@ In the project directory, you can run:
 
 ### `npm run dev`
 
-because when you deploy it to heroku the npm start command is 
-designated to server the current build to the end user.
+because when you deploy it to heroku the 'npm start' command is 
+designated to serve the current build to the end user.
 
 See package.json to understand what's going on
