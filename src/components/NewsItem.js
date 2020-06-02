@@ -34,7 +34,7 @@ class NewsItem extends Component {
                 {/* I had to check if there was a title, because some of the articles HAVE NO TITLE?!? */}
                 {baseData.title && 
                 <div>   
-                <a href={baseData.url} target="blank"><h1 className = "articles" style={{marginBottom:'0px'}}>{baseData.title}</h1></a>
+                <a style={{textDecoration: 'none'}} href={baseData.url} target="blank"><h1 className = "articles" style={{marginBottom:'0px', textDecoration: 'none'}}>{baseData.title}</h1></a>
                 <NewsInfo newsData={this.props.newsData} />
                 </div>
                 }
