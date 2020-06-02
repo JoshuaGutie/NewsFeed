@@ -38,7 +38,7 @@ class App extends Component {
   // this handles the search form submission
   handleSubmit = (event) => {
     // special url for search queries
-    let newsUrl =`//hn.algolia.com/api/v1/search?query=${this.state.query}`
+    let newsUrl =`//hn.algolia.com/api/v1/search_by_date?query=${this.state.query}`
     // don't reload the page
     event.preventDefault();
 
