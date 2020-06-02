@@ -13,7 +13,7 @@ function Comment({ comment }) {
    
     return (
       <div style={{"marginLeft": "45px", "marginTop": "10px"}}>
-      <span style={{fontWeight:'bold'}}>Author: {comment.author}</span>
+      <span style={{fontWeight:'bold'}}>Author: {comment.author}</span> <span style={{fontSize:'10pt'}}>{moment(new Date(comment.created_at)).format("MM-DD-YY hh:mm a")}</span>
         <div className="commentDiv" dangerouslySetInnerHTML={{ __html: comment.text }} />
         {nestedComments}
       </div>
@@ -63,7 +63,7 @@ class NewsInfo extends Component {
         return(
             <div id="commentsDiv" style={{display:'contents'}}>
                 <span style={{fontSize:'10pt'}}>
-                    Created: {moment(new Date(baseData.created_at)).format("YYYY-MM-DD hh:mm")}&nbsp;
+                    Created: {moment(new Date(baseData.created_at)).format("MM-DD-YY hh:mm a")}&nbsp;
                     Author: {baseData.author}&nbsp;
                     <span onClick={this.showComments}>Comments: {baseData.num_comments ? baseData.num_comments  : 0 } <img src={commentsIcon} alt='' title='show/hide comments' style={{width:'20px'}}/></span>&nbsp;
                     Points: {baseData.points}
