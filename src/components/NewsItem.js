@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 // Imported moment to make formatting the article dates easier
 import moment from 'moment';
+import '../App.css';
 
 
 // the detail line that goes under the article title
@@ -33,7 +34,7 @@ class NewsItem extends Component {
                 {/* I had to check if there was a title, because some of the articles HAVE NO TITLE?!? */}
                 {baseData.title && 
                 <div>   
-                <a href={baseData.url} target="blank"><h1 style={{marginBottom:'0px'}}>{baseData.title}</h1></a>
+                <a href={baseData.url} target="blank"><h1 className = "articles" style={{marginBottom:'0px'}}>{baseData.title}</h1></a>
                 <NewsInfo newsData={this.props.newsData} />
                 </div>
                 }
