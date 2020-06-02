@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
+import Header from './components/Header';
+import NewsItem from './components/NewsItem';
 
 class App extends Component {
   constructor(props) {
@@ -9,15 +11,29 @@ class App extends Component {
     this.state = {
       articles: [],
       pageNumber: 0,
+      newsUrl: '//hn.algolia.com/api/v1/search?tags=front_page',
       query: ''
     };
 
   }
 
+  changeUrl = (event) => {
+    let newsUrl='';
+    if (event==="homeUrl") newsUrl = '//hn.algolia.com/api/v1/search?tags=front_page';
+    if (event==="newUrl") newsUrl = '//hn.algolia.com/api/v1/search_by_date';
+    if (event==="risingUrl") newsUrl= '//hn.algolia.com/api/v1/search_by_date?tags=story';
+    
+    this.setState({
+      articles: [],
+      pageNumber: 0,
+      newsUrl: newsUrl
+    })
+    this.fetchData(newsUrl,0);
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({articles:[]});
-    console.log("Submitted");
     this.fetchData(this.state.query, this.state.pageNumber);
     this.setState({query: ''});
   }
@@ -37,7 +53,7 @@ class App extends Component {
       this.setState({
         pageNumber: newPage
       });
-      this.fetchData(this.state.query, newPage);
+      this.fetchData(this.state.newsUrl, newPage);
     }
   }
 
@@ -47,33 +63,23 @@ class App extends Component {
   }
 
   fetchData = (query, pageNumber) => {
-    let articles = `//hn.algolia.com/api/v1/search?query=${query}&page=${pageNumber}`;
+    let articles = this.state.newsUrl;
     axios.get(articles)
       .then(data => {
-        console.log(data);
+        if (data.data.hits) {
         this.setState({
           articles: [...this.state.articles, ...data.data.hits]
-        })
-        console.log("data", data)
+        })} else {console.log("no data")}
       })
   }
-
-
 
   render() {
     return (
       <div className="App">
-
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Search: 
-    <input type="text" name="name" placeholder="Search by term" value={this.state.query} onChange={this.handleChange}/>
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-
-        {this.state.articles.map(article => <h1 style={{ marginBottom: '10px' }} key={article.created_at}> {article.title} </h1>)}
-
+        <Header handleSubmit={this.handleSubmit} query={this.state.query} handleChange={this.handleChange} changeUrl={this.changeUrl} />
+        <div>
+        {this.state.articles.map((article,idx) => <NewsItem key={idx} newsData={article} />)}
+        </div>
       </div>
     );
   }
