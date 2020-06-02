@@ -12,10 +12,12 @@ function Comment({ comment }) {
     })
    
     return (
-      <div style={{"marginLeft": "45px", "marginTop": "10px"}}>
+      <div style={{"marginLeft": "45px"}}>
       <span style={{fontWeight:'bold'}}>Author: {comment.author}</span> <span style={{fontSize:'10pt'}}>{moment(new Date(comment.created_at)).format("MM-DD-YY hh:mm a")}</span>
+      <div style={{"marginTop": "10px",borderLeft:'2px solid #cadbce',paddingLeft:'4px'}}>
         <div className="commentDiv" dangerouslySetInnerHTML={{ __html: comment.text }} />
         {nestedComments}
+      </div>
       </div>
     )
   } 
