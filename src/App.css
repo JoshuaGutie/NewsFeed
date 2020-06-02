@@ -36,3 +36,9 @@ box-shadow: 0px 6px 15px -5px #000000;
   margin-right: 10px;
   color: rgb(39, 39, 156);
 }
+
+.commentDiv {
+  padding:20px;
+  border:2px solid #cadbce;
+  border-radius:10px;
+}

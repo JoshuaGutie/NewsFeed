@@ -6,6 +6,20 @@ import axios from 'axios';
 // comments icon
 import commentsIcon from '../img/comments.png';
 
+function Comment({ comment }) {
+    const nestedComments = (comment.children || []).map(comment => {
+      return <Comment key={comment.id} comment={comment} type="child" />
+    })
+   
+    return (
+      <div style={{"marginLeft": "45px", "marginTop": "10px"}}>
+      <span style={{fontWeight:'bold'}}>Author: {comment.author}</span>
+        <div className="commentDiv" dangerouslySetInnerHTML={{ __html: comment.text }} />
+        {nestedComments}
+      </div>
+    )
+  } 
+
 // the detail line that goes under the article title
 class NewsInfo extends Component {
     constructor(props) {
@@ -29,15 +43,16 @@ class NewsInfo extends Component {
     // calls the data
     fetchComments = () => {
     // query url is the url for whatever api endpoint we need
-    let commentsUrl = `//hn.algolia.com/api/v1/search?tags=comment,story_${this.props.newsData.objectID}&page=${this.state.pageNumber}&hitsPerPage=250`;
+    let commentsUrl = `//hn.algolia.com/api/v1/items/${this.props.newsData.objectID}`;
     // switched to axios to avoid CORS errors
     axios.get(commentsUrl)
       .then(data => {
         // check if there's data
-        if (data.data.hits) {
+        console.log(data)
+        if (data.data.children) {
         // if there is, add it to the data we already have
         this.setState({
-          comments: [...this.state.comments, ...data.data.hits]
+          comments: [...this.state.comments, ...data.data.children]
         })} else {console.log("no data")}
       })
   }
@@ -54,13 +69,8 @@ class NewsInfo extends Component {
                     Points: {baseData.points}
                 </span>
                 {this.state.showComments && this.state.comments.length>0 &&
-                <div style={{marginTop:'10px'}}>
-                    {this.state.comments.map((comment,idx) => <div><span style={{marginLeft:'200px',marginBottom:'10px',fontWeight:'bold'}}>
-                    Author: {comment.author}
-                    </span><div key={"comment"+idx} style={{display:'inline-block',width:'100%',marginTop:'6px'}}><div style={{width:'80%',float:'right',marginRight:'10px',marginBottom:'14px',padding:'20px',border:'2px solid #cadbce',borderRadius:'10px'}} dangerouslySetInnerHTML={{ __html: comment.comment_text }} />
-                    
-                    </div>
-                    </div>
+                <div style={{marginTop:'10px',marginLeft:'40px'}}>
+                    {this.state.comments.map((comment,idx) => <Comment key={comment.id} comment={comment} />
                     )
                     }
                 </div>
