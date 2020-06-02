@@ -4,6 +4,9 @@ import axios from 'axios';
 import Header from './components/Header';
 import NewsItem from './components/NewsItem';
 
+// all the other components are in their own
+// files in the components folder
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +20,7 @@ class App extends Component {
 
   }
 
+  // this responds when the user clicks the "new", "top" or "rising" buttons on the header
   changeUrl = (event) => {
     let newsUrl='';
     if (event==="homeUrl") newsUrl = '//hn.algolia.com/api/v1/search?tags=front_page';
@@ -31,17 +35,24 @@ class App extends Component {
     this.fetchData(newsUrl,0);
   }
 
+  // this handles the search form submission
   handleSubmit = (event) => {
+    // special url for search queries
     let newsUrl =`//hn.algolia.com/api/v1/search?query=${this.state.query}`
+    // don't reload the page
     event.preventDefault();
+
+    // clear out existing articles
     this.setState({articles:[],
     newsUrl: newsUrl,
     pageNumber:0
     });
+    // load new articles
     this.fetchData(newsUrl, 0);
     this.setState({query: ''});
   }
 
+  // keeps track of what the user's typing in the search box
   handleChange = (event) => {
     this.setState({query: event.target.value});
   }
@@ -61,16 +72,22 @@ class App extends Component {
     }
   }
 
+  // calls the first set of data
   componentDidMount = () => {
     this.fetchData(this.state.newsUrl, this.state.pageNumber);
     window.addEventListener('scroll', this.infiniteScroll);
   }
 
-  fetchData = (query, pageNumber) => {
-    let articles = query;
+  // calls the data
+  fetchData = (queryUrl, pageNumber) => {
+    // query url is the url for whatever api endpoint we need
+    let articles = queryUrl;
+    // switched to axios to avoid CORS errors
     axios.get(articles)
       .then(data => {
+        // check if there's data
         if (data.data.hits) {
+        // if there is, add it to the data we already have
         this.setState({
           articles: [...this.state.articles, ...data.data.hits]
         })} else {console.log("no data")}
