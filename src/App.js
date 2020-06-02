@@ -17,6 +17,7 @@ class App extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState({articles:[]});
     console.log("Submitted");
     this.fetchData(this.state.query, this.state.pageNumber);
     this.setState({query: ''});
