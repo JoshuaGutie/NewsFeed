@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { render } from '@testing-library/react';
+import axios from 'axios';
 
 class App extends Component {
   constructor(props) {
@@ -49,7 +48,7 @@ class App extends Component {
 
   fetchData = (query, pageNumber) => {
     let articles = `http://hn.algolia.com/api/v1/search?query=${query}&page=${pageNumber}`;
-    fetch(articles)
+    axios.get(articles)
       .then(res => res.json())
       .then(data => {
         this.setState({
