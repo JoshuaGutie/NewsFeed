@@ -32,9 +32,13 @@ class App extends Component {
   }
 
   handleSubmit = (event) => {
+    let newsUrl =`//hn.algolia.com/api/v1/search?query=${this.state.query}`
     event.preventDefault();
-    this.setState({articles:[]});
-    this.fetchData(this.state.query, this.state.pageNumber);
+    this.setState({articles:[],
+    newsUrl: newsUrl,
+    pageNumber:0
+    });
+    this.fetchData(newsUrl, 0);
     this.setState({query: ''});
   }
 
@@ -58,12 +62,12 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    this.fetchData(this.state.query, this.state.pageNumber);
+    this.fetchData(this.state.newsUrl, this.state.pageNumber);
     window.addEventListener('scroll', this.infiniteScroll);
   }
 
   fetchData = (query, pageNumber) => {
-    let articles = this.state.newsUrl;
+    let articles = query;
     axios.get(articles)
       .then(data => {
         if (data.data.hits) {

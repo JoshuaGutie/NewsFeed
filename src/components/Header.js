@@ -3,7 +3,6 @@ import logo from '../img/logo.png';
 import bannerLogo from '../img/bannerLogo.png'
 import hotPosts from '../img/hot.png';
 import newPosts from '../img/new.png';
-import topPosts from '../img/top.png';
 import risingPosts from '../img/rising.png';
 
 function Logo() {
@@ -32,7 +31,6 @@ render() {
         </form>
         <div>
         <img src={hotPosts} name="homeUrl" className="postImg" onClick={this.changeNews} alt='' />
-        <img src={topPosts} name= "topUrl" className="postImg" onClick={this.changeNews} alt='' />
         <img src={newPosts} name="newUrl" className="postImg" onClick={this.changeNews} alt='' />
         <img src={risingPosts} name="risingUrl" className="postImg" onClick={this.changeNews} alt='' />
         </div>
