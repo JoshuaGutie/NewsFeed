@@ -23,3 +23,15 @@ box-shadow: 0px 6px 15px -5px #000000;
   width: 30px;
   margin-left: 10px;
 }
+
+.articles {
+  transition: 0.5s;
+  color: rgb(19, 15, 87);
+  margin-left: 5px;
+}
+
+.articles:hover {
+  transform: scale(1.02);
+  margin-right: 10px;
+  color: rgb(39, 39, 156);
+}
