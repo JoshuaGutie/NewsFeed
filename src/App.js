@@ -37,8 +37,11 @@ class App extends Component {
 
   // this handles the search form submission
   handleSubmit = (event) => {
+    const now = new Date()  
+    const secondsSinceEpoch = Math.round(now.getTime() / 1000) - 1000000000;
     // special url for search queries
-    let newsUrl =`//hn.algolia.com/api/v1/search_by_date?query=${this.state.query}`
+    let newsUrl =`//hn.algolia.com/api/v1/search_by_date?query=${this.state.query}&tags=story&numericFilters=created_at_i>${secondsSinceEpoch}`
+    console.log(newsUrl);
     // don't reload the page
     event.preventDefault();
 
@@ -81,7 +84,7 @@ class App extends Component {
   // calls the data
   fetchData = (queryUrl, pageNumber) => {
     // query url is the url for whatever api endpoint we need
-    let articles = queryUrl;
+    let articles = queryUrl + `&page=${this.state.pageNumber}`;
     // switched to axios to avoid CORS errors
     axios.get(articles)
       .then(data => {
