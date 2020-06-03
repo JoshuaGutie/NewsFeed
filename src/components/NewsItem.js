@@ -5,7 +5,7 @@ import moment from 'moment';
 import axios from 'axios';
 // comments icon
 import commentsIcon from '../img/comments.png';
-
+import '../App.css';
 function Comment({ comment }) {
 
   // this causes the data to check if there are more "children" comments under
@@ -103,7 +103,7 @@ class NewsItem extends Component {
                 {/* I had to check if there was a title, because some of the articles HAVE NO TITLE?!? */}
                 {baseData.title && 
                 <div>   
-                <a style={{textDecoration: 'none'}} href={baseData.url} target="blank"><h1 className="articles" style={{marginBottom:'0px'}}>{baseData.title}</h1></a>
+                <a style={{textDecoration: 'none'}} href={baseData.url} target="blank"><h1 className = "articles" style={{marginBottom:'0px', textDecoration: 'none'}}>{baseData.title}</h1></a>
                 <NewsInfo newsData={this.props.newsData} />
                 </div>
                 }

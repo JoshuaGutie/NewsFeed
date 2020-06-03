@@ -31,6 +31,7 @@ box-shadow: 0px 6px 15px -5px #000000;
 }
 
 .articles:hover {
+
   transform-origin: top left;
   transform: scale(1.02);
   margin-right: 10px;
@@ -42,4 +43,8 @@ box-shadow: 0px 6px 15px -5px #000000;
   border:2px solid #cadbce;
   border-radius:10px;
   margin-bottom: 10px;
+
+  transform: scale(1.02);
+  margin-right: 10px;
+  color: blue;
 }
