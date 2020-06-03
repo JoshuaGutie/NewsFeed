@@ -28,6 +28,7 @@ class App extends Component {
     if (event==="risingUrl") newsUrl= '//hn.algolia.com/api/v1/search_by_date?numericFilters=points>=10&tags=story';
 
     this.setState({
+      query: '',
       articles: [],
       pageNumber: 0,
       newsUrl: event
