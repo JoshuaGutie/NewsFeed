@@ -26,11 +26,24 @@ box-shadow: 0px 6px 15px -5px #000000;
 
 .articles {
   transition: 0.5s;
-  color: black;
+  color: rgb(19, 15, 87);
   margin-left: 5px;
 }
 
 .articles:hover {
+
+  transform-origin: top left;
+  transform: scale(1.02);
+  margin-right: 10px;
+  color: rgb(39, 39, 156);
+}
+
+.commentDiv {
+  padding:20px;
+  border:2px solid #cadbce;
+  border-radius:10px;
+  margin-bottom: 10px;
+
   transform: scale(1.02);
   margin-right: 10px;
   color: blue;
