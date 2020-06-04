@@ -5,21 +5,23 @@ import moment from 'moment';
 import axios from 'axios';
 // comments icon
 import commentsIcon from '../img/comments.png';
+import opIcon from '../img/op.png';
 
-function Comment({ comment }) {
+function Comment({ comment,postAuthor }) {
 
   // this causes the data to check if there are more "children" comments under
   // the current comment. If there are then is recursively renders more of this
   // same component below the one we originally called and if not renders nothing
     const nestedComments = (comment.children || []).map(comment => {
-      return <Comment key={comment.id} comment={comment} type="child" />
+      return <Comment key={comment.id} postAuthor={postAuthor} comment={comment} type="child" />
     })
    
     return (
       // this margin causes the recursive nested comments to indent so
       // the user can see the thread
       <div style={{"marginLeft": "45px"}}>
-      <span style={{fontWeight:'bold'}}>Author: {comment.author}</span> <span style={{fontSize:'10pt'}}>{moment(new Date(comment.created_at)).format("MM-DD-YY hh:mm a")}</span>
+      {comment.author===postAuthor && <img src={opIcon} alt='' title='Original Author' style={{width:'16px',marginRight:'4px'}} />}
+      <span style={{fontWeight:'bold'}}>{comment.author}</span> <span style={{fontSize:'10pt'}}>{moment(new Date(comment.created_at)).format("MM-DD-YY hh:mm a")}</span>
       {/* this left border is the line that connects the comments on the same level in the thread */}
       <div style={{"marginTop": "10px",borderLeft:'2px solid #cadbce',paddingLeft:'4px'}}>
          {/* outputs the comment text in the HTML format in which it was saved. this is the main comment */}
@@ -37,6 +39,7 @@ class NewsInfo extends Component {
         super(props);
     
         this.state = {
+          postAuthor: '',
           comments: [],
           pageNumber: 0,
           showComments: false
@@ -62,6 +65,7 @@ class NewsInfo extends Component {
         if (data.data.children) {
         // if there is, add it to the data we already have
         this.setState({
+          postAuthor: data.data.author,
           comments: [...this.state.comments, ...data.data.children]
         })} else {console.log("no data")}
       })
@@ -80,7 +84,7 @@ class NewsInfo extends Component {
                 </span>
                 {this.state.showComments && this.state.comments.length>0 &&
                 <div style={{marginTop:'10px',marginLeft:'40px'}}>
-                    {this.state.comments.map((comment,idx) => <Comment key={comment.id} comment={comment} />
+                    {this.state.comments.map((comment,idx) => <Comment postAuthor={this.state.postAuthor} key={comment.id} comment={comment} />
                     )
                     }
                 </div>
