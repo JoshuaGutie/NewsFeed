@@ -6,6 +6,7 @@ import axios from 'axios';
 // comments icon
 import commentsIcon from '../img/comments.png';
 import opIcon from '../img/op.png';
+import loaderIcon from '../img/ajax-loader.gif';
 
 function Comment({ comment,postAuthor }) {
 
@@ -42,6 +43,7 @@ class NewsInfo extends Component {
     
         this.state = {
           postAuthor: '',
+          loadingComments: false,
           comments: [],
           pageNumber: 0,
           showComments: false
@@ -49,15 +51,18 @@ class NewsInfo extends Component {
     }
 
     showComments = () => {
+      let commentsShowing = this.state.showComments;
+
         this.setState({
             showComments: !this.state.showComments
         })
         
-      this.fetchComments();
+      if(!commentsShowing) this.fetchComments();
     }
 
     // calls the data
     fetchComments = () => {
+      this.setState({loadingComments:true});
     // query url is the url for whatever api endpoint we need
     let commentsUrl = `//hn.algolia.com/api/v1/items/${this.props.newsData.objectID}`;
     // switched to axios to avoid CORS errors
@@ -67,6 +72,7 @@ class NewsInfo extends Component {
         if (data.data.children) {
         // if there is, add it to the data we already have
         this.setState({
+          loadingComments: false,
           postAuthor: data.data.author,
           comments: [...this.state.comments, ...data.data.children]
         })} else {console.log("no data")}
@@ -77,12 +83,13 @@ class NewsInfo extends Component {
     render() {
         let baseData=this.props.newsData
         return(
-            <div id="commentsDiv" style={{display:'contents'}}>
+            <div id="commentsDiv" style={{marginLeft:'5px'}}>
                 <span style={{fontSize:'10pt'}}>
                     Created: {moment(new Date(baseData.created_at)).format("MM-DD-YY hh:mm a")}&nbsp;
                     Author: {baseData.author}&nbsp;
                     <span onClick={this.showComments}>Comments: {baseData.num_comments ? baseData.num_comments  : 0 } <img src={commentsIcon} alt='' title='show/hide comments' style={{width:'20px'}}/></span>&nbsp;
-                    Points: {baseData.points}
+                    Points: {baseData.points} 
+                    {this.state.loadingComments && <img src={loaderIcon} style={{width:'16px',marginLeft:'4px'}} alt='' />}
                 </span>
                 {this.state.showComments && this.state.comments.length>0 &&
                 <div style={{marginTop:'10px',marginLeft:'40px'}}>
