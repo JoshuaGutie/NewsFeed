@@ -20,8 +20,10 @@ function Comment({ comment,postAuthor }) {
       // this margin causes the recursive nested comments to indent so
       // the user can see the thread
       <div style={{"marginLeft": "45px"}}>
-      {comment.author===postAuthor && <img src={opIcon} alt='' title='Original Author' style={{width:'16px',marginRight:'4px'}} />}
+      <img src={`https://robohash.org/${comment.author}.png`} style={{width:'30px',marginRight:'4px'}} title='' alt=''></img>
       <span style={{fontWeight:'bold'}}>{comment.author}</span> <span style={{fontSize:'10pt'}}>{moment(new Date(comment.created_at)).format("MM-DD-YY hh:mm a")}</span>
+      {comment.author===postAuthor && <img src={opIcon} alt='' title='Original Author' style={{width:'16px',marginLeft:'4px'}} />}
+
       {/* this left border is the line that connects the comments on the same level in the thread */}
       <div style={{"marginTop": "2px",borderLeft:'2px solid #cadbce',paddingLeft:'4px'}}>
          {/* outputs the comment text in the HTML format in which it was saved. this is the main comment */}
