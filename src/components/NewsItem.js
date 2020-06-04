@@ -23,7 +23,7 @@ function Comment({ comment,postAuthor }) {
       {comment.author===postAuthor && <img src={opIcon} alt='' title='Original Author' style={{width:'16px',marginRight:'4px'}} />}
       <span style={{fontWeight:'bold'}}>{comment.author}</span> <span style={{fontSize:'10pt'}}>{moment(new Date(comment.created_at)).format("MM-DD-YY hh:mm a")}</span>
       {/* this left border is the line that connects the comments on the same level in the thread */}
-      <div style={{"marginTop": "10px",borderLeft:'2px solid #cadbce',paddingLeft:'4px'}}>
+      <div style={{"marginTop": "2px",borderLeft:'2px solid #cadbce',paddingLeft:'4px'}}>
          {/* outputs the comment text in the HTML format in which it was saved. this is the main comment */}
         <div className="commentDiv" dangerouslySetInnerHTML={{ __html: comment.text }} />
         {/* display any nested comments */}

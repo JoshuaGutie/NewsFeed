@@ -42,8 +42,8 @@ body {
 }
 
 .commentDiv {
-  padding:20px;
-  border:2px solid #cadbce;
-  border-radius:10px;
-  margin-bottom: 10px;
+  padding: 0px 0px 5px 5px;
+  /* border:2px solid #cadbce;
+  border-radius:10px; */
+  margin-bottom: 6px;
 }
