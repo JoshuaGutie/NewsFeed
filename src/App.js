@@ -10,8 +10,13 @@ import NewsItem from './components/NewsItem';
 class App extends Component {
   constructor(props) {
     super(props);
-
+    let now = new Date();
+    let thirtySeconds = Math.round(now.getTime() / 1000)-30000;
+    
     this.state = {
+      lastNewPostQuery: thirtySeconds,
+      newPosts: 0,
+      checkingNewPosts: false,
       articles: [],
       pageNumber: 0,
       newsUrl: 'homeUrl',
@@ -73,8 +78,48 @@ class App extends Component {
   // calls the first set of data
   componentDidMount = () => {
     this.fetchData(this.state.newsUrl, this.state.pageNumber);
+    this.checkNewPosts();
     window.addEventListener('scroll', this.infiniteScroll);
   }
+
+  componentWillUnmount() {
+    clearTimeout(this.intervalID);
+  }
+
+ 
+clearNewPostCounter = () => {
+const now = new Date()  
+const timeInSeconds = Math.round(now.getTime() / 1000);
+this.setState({
+    lastNewPostQuery: timeInSeconds,
+    newPosts: 0
+});
+document.title= `Pathetic News Network`;
+}
+
+checkNewPosts = () => {
+
+this.setState({checkingNewPosts: true});
+let newArticles = `//hn.algolia.com/api/v1/search_by_date?tags=story&numericFilters=created_at_i>${this.state.lastNewPostQuery}`;
+
+// switched to axios to avoid CORS errors
+axios.get(newArticles)
+  .then(data => {
+    // check if there's data
+    if (data.data.hits) {
+    // if there is, add it to the data we already have
+    this.setState({
+      checkingNewPosts: false,
+      newPosts: data.data.nbHits
+    })
+    if (data.data.nbHits>0) document.title= `(${data.data.nbHits}) Pathetic News Network`;
+    this.intervalID = setTimeout(
+      this.checkNewPosts.bind(this),
+      30000);
+  } else {console.log("no data")}
+  })
+}
+
 
   // calls the data
   fetchData = (queryUrl, pageNumber) => {
@@ -86,7 +131,7 @@ class App extends Component {
     if (articles==="newUrl") articles = `//hn.algolia.com/api/v1/search_by_date?tags=story&page=${pageNumber}`;
     if (articles==="risingUrl") articles= `//hn.algolia.com/api/v1/search_by_date?numericFilters=points>=10&tags=story&page=${pageNumber}`;
     if (articles==="queryUrl") articles = `//hn.algolia.com/api/v1/search_by_date?query=${this.state.query}&tags=story&numericFilters=created_at_i>${secondsSinceEpoch}&page=${pageNumber}`
-    console.log("articlesUrl:" + articles);
+    
     // switched to axios to avoid CORS errors
     axios.get(articles)
       .then(data => {
@@ -102,7 +147,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header handleSubmit={this.handleSubmit} query={this.state.query} handleChange={this.handleChange} changeUrl={this.changeUrl} />
+        <Header handleSubmit={this.handleSubmit} query={this.state.query} handleChange={this.handleChange} changeUrl={this.changeUrl} clearNewPostCounter={this.clearNewPostCounter} newPosts={this.state.newPosts} />
         <div>
         {this.state.articles.map((article,idx) => <NewsItem key={idx} newsData={article} />)}
         </div>

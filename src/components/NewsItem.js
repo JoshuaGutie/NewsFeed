@@ -29,7 +29,7 @@ function Comment({ comment }) {
       </div>
       </div>
     )
-  } 
+} 
 
 // the detail line that goes under the article title
 class NewsInfo extends Component {
@@ -59,7 +59,6 @@ class NewsInfo extends Component {
     axios.get(commentsUrl)
       .then(data => {
         // check if there's data
-        console.log(data)
         if (data.data.children) {
         // if there is, add it to the data we already have
         this.setState({
