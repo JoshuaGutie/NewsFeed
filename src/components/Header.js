@@ -1,24 +1,11 @@
 import React, { Component } from 'react';
-// our pictures for the header
-import logo from '../img/logo.png';
-import bob from '../img/bob.png';
-import bannerLogo from '../img/bannerLogo.png'
 import hotPosts from '../img/hot.png';
 import newPosts from '../img/new.png';
 import risingPosts from '../img/rising.png';
+import info from '../img/info.png';
+import Logo from './Logo';
 
-// The PNN Logos and tagline
-function Logo() {
-    return(
-        <div>
-            <img src={bob} alt='' style={{float:'left',display:'inline-block',marginRight:'5px'}}/>
-            <div style={{display:'flow-root'}}>
-            <img src={logo} alt='' style={{width:'100px'}}/><br/>
-            <img src={bannerLogo} alt='' style={{width:'300px',maxWidth:'90%'}}/>
-            </div>
-        </div>
-    )
-}
+
 
 class FilterIcons extends Component {
     changeNews = (event) => {
@@ -40,6 +27,7 @@ class FilterIcons extends Component {
         {this.props.newPosts!==0 && <div id="newPostsCounter" style={{border:'1px solid white',borderRadius:'2px',fontSize:'x-small',backgroundColor:'red',color:'white',fontWeight:'bold',float:'right'}}  onClick={this.changeNews}>&nbsp;{this.props.newPosts}&nbsp;</div>}
         </div>
         <div id="risingUrl" className="postImg" style={{backgroundImage:`url(${risingPosts})`,backgroundSize:'100% 100%',height:'50px',float:'left'}} onClick={this.changeNews} alt='' title='Getting a lot of votes' ></div>       
+        <div id="info" className="postImg" style={{backgroundImage:`url(${info})`,backgroundSize:'cover', height:'25px',width:'25px',float:'left'}} alt='' title='About PNN' onClick={this.props.showInfo}></div>
         </div>
         )
     }
@@ -73,7 +61,7 @@ render() {
         </div> 
         <div style={{width:'25%',float:'left'}}>
         {/* these are the pictures the user can click to change the data */}
-        <FilterIcons changeUrl={this.props.changeUrl} newPosts={this.props.newPosts} clearNewPostCounter={this.props.clearNewPostCounter}/>
+        <FilterIcons showInfo={this.props.showInfo} changeUrl={this.props.changeUrl} newPosts={this.props.newPosts} clearNewPostCounter={this.props.clearNewPostCounter}/>
         </div>
         </div>
 )

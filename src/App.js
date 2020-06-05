@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import Header from './components/Header';
 import NewsItem from './components/NewsItem';
+import InfoPanel from './components/InfoPanel';
 
 // all the other components are in their own
 // files in the components folder
@@ -14,6 +15,7 @@ class App extends Component {
     let thirtySeconds = Math.round(now.getTime() / 1000)-30000;
     
     this.state = {
+      showInfo: false,
       lastNewPostQuery: thirtySeconds,
       newPosts: 0,
       checkingNewPosts: false,
@@ -58,6 +60,12 @@ class App extends Component {
   // keeps track of what the user's typing in the search box
   handleChange = (event) => {
     this.setState({query: event.target.value});
+  }
+
+  showInfo = () => {
+    this.setState({
+      showInfo: !this.state.showInfo
+    })
   }
 
 
@@ -147,10 +155,11 @@ axios.get(newArticles)
   render() {
     return (
       <div className="App">
-        <Header handleSubmit={this.handleSubmit} query={this.state.query} handleChange={this.handleChange} changeUrl={this.changeUrl} clearNewPostCounter={this.clearNewPostCounter} newPosts={this.state.newPosts} />
+        <Header handleSubmit={this.handleSubmit} query={this.state.query} handleChange={this.handleChange} changeUrl={this.changeUrl} clearNewPostCounter={this.clearNewPostCounter} showInfo={this.showInfo} newPosts={this.state.newPosts} />
         <div>
         {this.state.articles.map((article,idx) => <NewsItem key={idx} newsData={article} />)}
         </div>
+        {this.state.showInfo && <InfoPanel showInfo={this.showInfo} />}
       </div>
     );
   }
