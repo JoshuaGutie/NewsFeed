@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 // Imported moment to make formatting the article dates easier
 import moment from 'moment';
 // use axios to fetch comments
@@ -10,6 +10,8 @@ import loaderIcon from '../img/ajax-loader.gif';
 
 function Comment({ comment,postAuthor }) {
 
+  const [showChildren,setShowChildren] = useState(true);
+
   // this causes the data to check if there are more "children" comments under
   // the current comment. If there are then is recursively renders more of this
   // same component below the one we originally called and if not renders nothing
@@ -20,18 +22,21 @@ function Comment({ comment,postAuthor }) {
     return (
       // this margin causes the recursive nested comments to indent so
       // the user can see the thread
-      <div style={{"marginLeft": "45px"}}>
-      <img src={`https://robohash.org/${comment.author}.png`} style={{width:'30px',marginRight:'4px'}} title='' alt=''></img>
+      <div style={{"marginLeft": "45px",marginBottom:'10px'}}>
+      <div style={{display:'inline',fontWeight:'bold',fontSize:'large'}} onClick={()=> setShowChildren(!showChildren)}>{showChildren ? '-' : '+'}<img src={`https://robohash.org/${comment.author}.png`} style={{width:'30px',marginRight:'4px',verticalAlign:'middle'}} title='' alt=''></img>
       <span style={{fontWeight:'bold'}}>{comment.author}</span> <span style={{fontSize:'10pt'}}>{moment(new Date(comment.created_at)).format("MM-DD-YY hh:mm a")}</span>
       {comment.author===postAuthor && <img src={opIcon} alt='' title='Original Author' style={{width:'16px',marginLeft:'4px'}} />}
-
+      </div>
       {/* this left border is the line that connects the comments on the same level in the thread */}
-      <div style={{"marginTop": "2px",borderLeft:'2px solid #cadbce',paddingLeft:'4px'}}>
+      {showChildren && 
+      <div style={{"marginTop": "2px",borderLeft:'2px solid #cadbce',marginLeft:'4px',position:'relative'}}>
+      <div style={{width:'15px',float:'left',position:'absolute',top:'0',bottom:'0'}} onClick={()=>{setShowChildren(!showChildren)}} />
          {/* outputs the comment text in the HTML format in which it was saved. this is the main comment */}
         <div className="commentDiv" dangerouslySetInnerHTML={{ __html: comment.text }} />
         {/* display any nested comments */}
         {nestedComments}
       </div>
+      }
       </div>
     )
 } 
