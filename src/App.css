@@ -110,3 +110,13 @@ body {
   box-shadow: 0px 6px 15px -5px #000000;
   padding: 20px;
 }
+
+.comments-link {
+  color: rgb(39, 39, 156);
+  border-bottom: .5px solid rgb(39, 39, 156);
+}
+
+.comments-link:hover {
+  color: #39a9de;
+  border-bottom: .5px solid #39a9de;
+}

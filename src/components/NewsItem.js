@@ -30,6 +30,7 @@ function Comment({ comment,postAuthor }) {
       {/* this left border is the line that connects the comments on the same level in the thread */}
       {showChildren && 
       <div style={{"marginTop": "2px",borderLeft:'2px solid #cadbce',marginLeft:'4px',position:'relative'}}>
+      {/* this next line is the invisible div next to the left border that will collapse the comment thread when clicked */}
       <div style={{width:'15px',float:'left',position:'absolute',top:'0',bottom:'0'}} onClick={()=>{setShowChildren(!showChildren)}} />
          {/* outputs the comment text in the HTML format in which it was saved. this is the main comment */}
         <div className="commentDiv" dangerouslySetInnerHTML={{ __html: comment.text }} />
@@ -92,13 +93,13 @@ class NewsInfo extends Component {
                 <span style={{fontSize:'10pt'}}>
                     Created: {moment(new Date(baseData.created_at)).format("MM-DD-YY hh:mm a")}&nbsp;
                     Author: {baseData.author}&nbsp;
-                    <span onClick={this.showComments}>Comments: {baseData.num_comments ? baseData.num_comments  : 0 } <img src={commentsIcon} alt='' title='show/hide comments' style={{width:'20px'}}/></span>&nbsp;
+                    <span class="comments-link" onClick={this.showComments}>Comments: {baseData.num_comments ? baseData.num_comments  : 0 } <img src={commentsIcon} alt='' title='show/hide comments' style={{width:'20px'}}/></span>&nbsp;
                     Points: {baseData.points} 
                     {this.state.loadingComments && <img src={loaderIcon} style={{width:'16px',marginLeft:'4px'}} alt='' />}
                 </span>
                 {this.state.showComments && this.state.comments.length>0 &&
                 <div style={{marginTop:'10px',marginLeft:'40px'}}>
-                    {this.state.comments.map((comment,idx) => <Comment postAuthor={this.state.postAuthor} key={comment.id} comment={comment} />
+                    {this.state.comments.map((comment) => <Comment postAuthor={this.state.postAuthor} key={comment.id} comment={comment} />
                     )
                     }
                 </div>
