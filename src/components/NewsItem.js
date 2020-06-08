@@ -76,7 +76,7 @@ class NewsInfo extends Component {
                 <span style={{fontSize:'10pt'}}>
                     Created: {moment(new Date(baseData.created_at)).format("MM-DD-YY hh:mm a")}&nbsp;
                     Author: {baseData.author}&nbsp;
-                    <span onClick={this.showComments}>Comments: {baseData.num_comments ? baseData.num_comments  : 0 } <img src={commentsIcon} alt='' title='show/hide comments' style={{width:'20px'}}/></span>&nbsp;
+                    <span><span class="comments-link" onClick={this.showComments}>Comments: {baseData.num_comments ? baseData.num_comments  : 0 }</span> <img src={commentsIcon} alt='' title='show/hide comments' style={{width:'20px'}}/></span>&nbsp;
                     Points: {baseData.points}
                 </span>
                 {this.state.showComments && this.state.comments.length>0 &&
