@@ -4,9 +4,9 @@ import moment from 'moment';
 // use axios to fetch comments
 import axios from 'axios';
 // comments icon
-import commentsIcon from '../img/comments.png';
 import opIcon from '../img/op.png';
 import loaderIcon from '../img/ajax-loader.gif';
+import ChatRoundedIcon from '@material-ui/icons/ChatRounded';
 
 function Comment({ comment,postAuthor }) {
 
@@ -93,7 +93,7 @@ class NewsInfo extends Component {
                 <span style={{fontSize:'10pt'}}>
                     Created: {moment(new Date(baseData.created_at)).format("MM-DD-YY hh:mm a")}&nbsp;
                     Author: {baseData.author}&nbsp;
-                    <span><span class="comments-link" onClick={this.showComments}>Comments: {baseData.num_comments ? baseData.num_comments  : 0 }</span> <img src={commentsIcon} alt='' title='show/hide comments' style={{width:'20px'}}/></span>&nbsp;
+                    <span onClick={this.showComments}><span class="comments-link">Comments: {baseData.num_comments ? baseData.num_comments  : 0 }</span> <ChatRoundedIcon title="Show/Hide Comments" style={{color:"red",height:'20px',width:'20px'}} /></span>&nbsp;
                     Points: {baseData.points} 
                     {this.state.loadingComments && <img src={loaderIcon} style={{width:'16px',marginLeft:'4px'}} alt='' />}
                 </span>

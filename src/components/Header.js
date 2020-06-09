@@ -5,8 +5,6 @@ import risingPosts from '../img/rising.png';
 import info from '../img/info.png';
 import Logo from './Logo';
 
-
-
 class FilterIcons extends Component {
     changeNews = (event) => {
         let clickedIcon = event.target.id;
